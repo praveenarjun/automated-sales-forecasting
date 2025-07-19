@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retail Sales Forecast Dashboard - Strategic Insights</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+    .chart-container {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      height: 450px; /* Adjust height as needed for the image */
+      display: flex; /* Use flexbox to center the image */
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 1rem; /* Add some padding around the image */
+    }
+    .chart-container img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain; /* Ensures the image scales nicely within the container */
+      border-radius: 0.5rem; /* Slightly rounded corners for the image */
+    }
+    @media (max-width: 768px) { .chart-container { height: 350px; } }
+    .insight-card {
+      background-color: #ffffff;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body class="text-slate-800 p-4 sm:p-8">
+  <div class="container mx-auto">
+    <header class="text-center mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold text-slate-900">Retail Sales Forecast Dashboard</h1>
+      <p class="mt-2 text-lg text-slate-600">Driving Strategic Decisions with Future Projections</p>
+    </header>
+
+    <main>
+      <!-- Sales Forecast Section -->
+      <section id="forecast" class="p-4 md:p-8 bg-white rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-bold mb-2">Sales Forecast: Anticipating Future Revenue</h2>
+        <p class="mb-6 text-slate-600">A clear view of expected sales performance to guide strategic planning.</p>
+
+        <!-- Key Forecast Metrics -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div class="insight-card">
+                <h3 class="text-xl font-semibold text-gray-700 mb-2">Total Historical Sales</h3>
+                <p id="totalHistoricalSales" class="text-3xl font-bold text-blue-600">$0.00</p>
+            </div>
+            <div class="insight-card">
+                <h3 class="text-xl font-semibold text-gray-700 mb-2">Total Forecast Sales</h3>
+                <p id="totalForecastSales" class="text-3xl font-bold text-red-600">$0.00</p>
+            </div>
+            <div class="insight-card">
+                <h3 class="text-xl font-semibold text-gray-700 mb-2">Avg. Monthly Sales Change (H vs F)</h3>
+                <p id="avgMonthlySalesChange" class="text-3xl font-bold text-gray-800">N/A</p>
+            </div>
+            <div class="insight-card">
+                <h3 class="text-xl font-semibold text-gray-700 mb-2">Highest Forecast Month</h3>
+                <p id="highestForecastMonth" class="text-xl font-bold text-purple-600">Date: N/A</p>
+                <p id="highestForecastSales" class="text-2xl font-bold text-purple-600">Sales: $0.00</p>
+            </div>
+            <div class="insight-card">
+                <h3 class="text-xl font-semibold text-gray-700 mb-2">Lowest Forecast Month</h3>
+                <p id="lowestForecastMonth" class="text-xl font-bold text-orange-600">Date: N/A</p>
+                <p id="lowestForecastSales" class="text-2xl font-bold text-orange-600">Sales: $0.00</p>
+            </div>
+            <div class="insight-card">
+                <h3 class="text-xl font-semibold text-gray-700 mb-2">Forecast Period</h3>
+                <p id="forecastPeriod" class="text-xl font-bold text-gray-500">N/A to N/A</p>
+            </div>
+        </div>
+
+        <div class="chart-container">
+          <!-- Updated image src to use the simplified filename -->
+          <img src="historical_vs_forecast_sales_plot.png" alt="Historical vs. Forecasted Monthly Sales Plot" onerror="this.onerror=null;this.src='https://placehold.co/800x400/cccccc/000000?text=Image+Not+Found';">
+        </div>
+
+        <div class="mt-6 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-lg">
+          <h3 class="font-bold text-lg text-blue-800">Strategic Implications & Recommendations</h3>
+          <p id="forecastRecommendation" class="text-blue-700 mt-2">Based on the forecast, we anticipate a significant increase in monthly sales. This suggests a need to scale up operations, secure more inventory, and potentially increase marketing spend to capitalize on the projected growth. Prepare for peak months to avoid stockouts.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Embedded JSON Data: This data is directly pulled from your sales_forecast_dashboard_insights.json file -->
+  <script type="application/json" id="forecast-data">
+    {
+        "total_historical_sales": 8393215.11,
+        "total_forecast_sales": 7749263.51,
+        "avg_historical_monthly_sales": 699434.59,
+        "avg_forecast_monthly_sales": 1291543.92,
+        "percentage_change_avg_monthly_sales": 84.66,
+        "highest_forecast_sales_month": {
+            "date": "2012-05-31",
+            "sales": 1376688.92
+        },
+        "lowest_forecast_sales_month": {
+            "date": "2011-12-31",
+            "sales": 1179782.6
+        },
+        "historical_sales_data": [
+            {
+                "Date": "2010-12-31",
+                "Sales": 572713.89
+            },
+            {
+                "Date": "2011-01-31",
+                "Sales": 569445.04
+            },
+            {
+                "Date": "2011-02-28",
+                "Sales": 447137.35
+            },
+            {
+                "Date": "2011-03-31",
+                "Sales": 595500.76
+            },
+            {
+                "Date": "2011-04-30",
+                "Sales": 469200.361
+            },
+            {
+                "Date": "2011-05-31",
+                "Sales": 678594.56
+            },
+            {
+                "Date": "2011-06-30",
+                "Sales": 661213.6900000001
+            },
+            {
+                "Date": "2011-07-31",
+                "Sales": 600091.011
+            },
+            {
+                "Date": "2011-08-31",
+                "Sales": 645343.9
+            },
+            {
+                "Date": "2011-09-30",
+                "Sales": 952838.382
+            },
+            {
+                "Date": "2011-10-31",
+                "Sales": 1039318.79
+            },
+            {
+                "Date": "2011-11-30",
+                "Sales": 1161817.38
+            }
+        ],
+        "forecast_sales_data": [
+            {
+                "Date": "2011-12-31",
+                "Sales": 1179782.59905594
+            },
+            {
+                "Date": "2012-01-31",
+                "Sales": 1201667.1069236204
+            },
+            {
+                "Date": "2012-02-29",
+                "Sales": 1305743.395156206
+            },
+            {
+                "Date": "2012-03-31",
+                "Sales": 1326739.7279210098
+            },
+            {
+                "Date": "2012-04-30",
+                "Sales": 1358641.7609481202
+            },
+            {
+                "Date": "2012-05-31",
+                "Sales": 1376688.923053217
+                }
+            ]
+        }
+    </script>
+
+    <script>
+        console.log("Script loaded successfully.");
+
+        window.onload = () => {
+            console.log("window.onload event fired.");
+
+            // Data from sales_forecast_dashboard_insights.json
+            const forecastRawData = JSON.parse(document.getElementById('forecast-data').textContent);
+
+            console.log("Dashboard data loaded:", forecastRawData);
+
+            // --- Populate Key Insights ---
+            document.getElementById('totalHistoricalSales').textContent = `$${forecastRawData.total_historical_sales.toLocaleString()}`;
+            document.getElementById('totalForecastSales').textContent = `$${forecastRawData.total_forecast_sales.toLocaleString()}`;
+            const change = forecastRawData.percentage_change_avg_monthly_sales;
+            document.getElementById('avgMonthlySalesChange').textContent = `${change.toFixed(2)}%`;
+            document.getElementById('avgMonthlySalesChange').classList.toggle('text-green-600', change >= 0);
+            document.getElementById('avgMonthlySalesChange').classList.toggle('text-red-600', change < 0);
+
+            document.getElementById('highestForecastMonth').textContent = `Date: ${forecastRawData.highest_forecast_sales_month.date}`;
+            document.getElementById('highestForecastSales').textContent = `Sales: $${forecastRawData.highest_forecast_sales_month.sales.toLocaleString()}`;
+            document.getElementById('lowestForecastMonth').textContent = `Date: ${forecastRawData.lowest_forecast_sales_month.date}`;
+            document.getElementById('lowestForecastSales').textContent = `Sales: $${forecastRawData.lowest_forecast_sales_month.sales.toLocaleString()}`;
+            document.getElementById('forecastPeriod').textContent = `${forecastRawData.historical_sales_data[0].Date} to ${forecastRawData.forecast_sales_data[forecastRawData.forecast_sales_data.length - 1].Date}`;
+
+            console.log("Key insights populated successfully.");
+        }; // End of window.onload
+    </script>
+</body>
+</html>
